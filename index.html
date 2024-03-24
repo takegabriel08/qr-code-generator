@@ -4,20 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clifford: '#da373d',
-                    }
-                }
-            }
-        }
-    </script> -->
     <link rel="stylesheet" href="style.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.10/umd.js"></script>
     <script src="https://kit.fontawesome.com/456b250bd9.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="favicon.jpg">
     <script src="qrcode.js"></script>
@@ -31,53 +20,100 @@
             <div class="font-xl bold text-center">Free QR code Generator</div>
         </div>
     </header>
-    <div class="big-rounded-square main cool-hover-big">
+    <div class="container big-rounded-square main cool-hover-big">
         <div class="container">
             <div class="col-left font-xl text-center radius-m">
                 <div class="options-container radius-m">
-                    <div class="option font-s radius-s btn-hover">asd</div>
-                    <div class="option font-s radius-s btn-hover">asd</div>
-                    <div class="option font-s radius-s btn-hover">asx</div>
-                    <div class="option font-s radius-s btn-hover">sex</div>
-                    <div class="option font-s radius-s btn-hover">xxx</div>
+                    <div class="option font-s radius-s btn-hover option-active">
+                        <i class="fas fa-link" style="font-size: 14px; padding-right: 3px;"></i>url
+                    </div>
+                    <div class="option font-s radius-s btn-hover"><i class="fas fa-align-justify"
+                            style="font-size: 14px; padding-right: 3px;"></i>text</div>
+                    <div class="option font-s radius-s btn-hover"><i class="fas fa-envelope"
+                            style="font-size: 14px;  padding-right: 3px;"></i>E-mail</div>
+                    <div class="option font-s radius-s btn-hover"><i class="fas fa-phone-volume"
+                            style="font-size: 14px; padding-right: 3px;"></i>Apel</div>
+                    <div class="option font-s radius-s btn-hover"><i class="fas fa-sms"
+                            style="font-size: 14px; padding-right: 3px;"></i>sms</div>
+                    <div class="option font-s radius-s btn-hover"><i class="far fa-id-card"
+                            style="font-size: 14px; padding-right: 3px;"></i>v-card</div>
+                    <div class="option font-s radius-s btn-hover"><i class="fab fa-whatsapp"
+                            style="font-size: 14px; padding-right: 3px;"></i>Whatsapp</div>
+                    <div class="option font-s radius-s btn-hover"><i class="fas fa-wifi"
+                            style="font-size: 14px; padding-right: 3px;"></i>WI-FI</div>
+                </div>
+                <div id="form-container" class="container">
+                    <form class="url-form display-none">
+                        <h4 style="margin-bottom: 10px;">Introdu URL-ul</h4>
+                        <input type="url" name="url" id="url" placeholder="https://">
+                        <p id="errorlink" style="color: rgb(237, 80, 79); visibility: hidden; position: absolute;">
+                            Acest
+                            câmp este obligatoriu
+                        </p>
+                        <p class="form-text text-muted" style="margin-top: 0.75rem;">Codul tău qr va deschide acest
+                            URL.</p>
+                        <button class="btn-generate radius-l btn-hover" type="submit">Generează</button>
+                    </form>
+                    <form class="form-email display-flex-center">
+                        <h4 style="margin-bottom: 10px;">Conținut E-mail</h6>
+                            <input type="email" name="email" id="adresa" placeholder="Adresa de E-mail"
+                                style="margin-bottom: 5px;">
+                            <p id="errormailto" class="display-none" style="color: rgb(237, 80, 79);">Acest câmp este
+                                obligatoriu</p>
+                            <input type="text" name="subject" id="subiect" placeholder="Subiect E-mail"
+                                style="margin-bottom: 5px;">
+                            <p id="errorsubject" class="display-none" style="color: rgb(237, 80, 79);">Acest câmp este
+                                obligatoriu</p>
+                            <textarea id="mesaj" placeholder="Messaj" rows="2">
+                        </textarea>
+                            <p id="errorbody" class="display-none" style="color: rgb(237, 80, 79);">Acest câmp este
+                                obligatoriu</p>
+                            <small class="form-text text-muted" style="margin-top: 0.75rem;">Scanarea codului va trimite
+                                acest E-mail</small>
+                            <button class="btn-generate radius-l btn-hover" type="submit">Generează</button>
+                    </form>
                 </div>
             </div>
             <div class="col-right font-xl text-center radius-m">
-                <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="290px" height="290px"
-                    viewBox="-260 40 520 520" style="enable-background:new -260 40 520 520;width: 100%;"
-                    xml:space="preserve" fill="#6c757d">
-                    <g>
-                        <polygon id="XMLID_14_" class="st0"
-                            points="100,360 60,360 60,320 20.1,320 20.1,440.1 60,440.1 60,480 100,480 	">
-                        </polygon>
-                        <rect id="XMLID_13_" x="100" y="480" class="st0" width="40" height="40"></rect>
-                        <rect id="XMLID_12_" x="179.9" y="480" class="st0" width="40" height="40"></rect>
-                        <polygon id="XMLID_11_" class="st0"
-                            points="220,320 179.9,320 179.9,360 139.9,360 139.9,480 179.9,480 179.9,440.1 220,440.1">
-                        </polygon>
-                        <rect id="XMLID_10_" x="20.1" y="480" class="st0" width="40" height="40"></rect>
+                <div id="qrcode">
+                    <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="290px" height="290px"
+                        viewBox="-260 40 520 520" style="enable-background:new -260 40 520 520;width: 100%;"
+                        xml:space="preserve" fill="#6c757d">
                         <g>
-                            <rect id="XMLID_9_" x="-139.9" y="159.9" class="st0" width="40" height="40"></rect>
-                            <path class="st0" d="M-220,80v200h199.9V80H-220z M-60,239.9h-119.9V120h120v119.9H-60z">
-                            </path>
+                            <polygon id="XMLID_14_" class="st0"
+                                points="100,360 60,360 60,320 20.1,320 20.1,440.1 60,440.1 60,480 100,480 	">
+                            </polygon>
+                            <rect id="XMLID_13_" x="100" y="480" class="st0" width="40" height="40"></rect>
+                            <rect id="XMLID_12_" x="179.9" y="480" class="st0" width="40" height="40"></rect>
+                            <polygon id="XMLID_11_" class="st0"
+                                points="220,320 179.9,320 179.9,360 139.9,360 139.9,480 179.9,480 179.9,440.1 220,440.1">
+                            </polygon>
+                            <rect id="XMLID_10_" x="20.1" y="480" class="st0" width="40" height="40"></rect>
+                            <g>
+                                <rect id="XMLID_9_" x="-139.9" y="159.9" class="st0" width="40" height="40"></rect>
+                                <path class="st0" d="M-220,80v200h199.9V80H-220z M-60,239.9h-119.9V120h120v119.9H-60z">
+                                </path>
+                            </g>
+                            <g>
+                                <rect id="XMLID_6_" x="100" y="159.9" class="st0" width="40" height="40"></rect>
+                                <path class="st0" d="M20.1,80v200H220V80H20.1z M179.9,239.9H60V120h120v119.9H179.9z">
+                                </path>
+                            </g>
+                            <g>
+                                <rect id="XMLID_3_" x="-139.9" y="399.9" class="st0" width="40" height="40"></rect>
+                                <path class="st0" d="M-220,320v200h199.9V320H-220z M-60,480h-119.9V360h120V480H-60z">
+                                </path>
+                            </g>
                         </g>
-                        <g>
-                            <rect id="XMLID_6_" x="100" y="159.9" class="st0" width="40" height="40"></rect>
-                            <path class="st0" d="M20.1,80v200H220V80H20.1z M179.9,239.9H60V120h120v119.9H179.9z"></path>
-                        </g>
-                        <g>
-                            <rect id="XMLID_3_" x="-139.9" y="399.9" class="st0" width="40" height="40"></rect>
-                            <path class="st0" d="M-220,320v200h199.9V320H-220z M-60,480h-119.9V360h120V480H-60z"></path>
-                        </g>
-                    </g>
-                </svg>
+                    </svg>
+                </div>
                 <div class="btn-download-container">
-                    <a class="btn-png font-s bold radius-m btn-hover">
+                    <a id="download-png" class="btn-png font-xs bold radius-m btn-hover">
                         <i class="fas fa-download"></i>
                         Daunloud pinigi
                     </a>
-                    <a class="btn-svg font-s bold radius-m btn-hover">
+                    <a id="download-svg" class="btn-svg font-xs bold radius-m btn-hover">
                         <i class="fas fa-download"></i>
                         Daunloud esvigi
                     </a>

@@ -2,11 +2,13 @@
 
 :root {
     --blue: #007bff;
+    --blue-faded: #007bff77;
     --indigo: #6610f2;
     --purple: #6f42c1;
     --pink: #e83e8c;
     --red: #dc3545;
     --orange: #fd7e14;
+    --orange-faded: #fd7d144b;
     --yellow: #ffc107;
     --green: #28a745;
     --teal: #20c997;
@@ -22,6 +24,7 @@
     --warning: #ffc107;
     --danger: #dc3545;
     --light: #f8f9fa;
+    --light-faded: #f8f9fa70;
     --dark: #343a40;
     --font-family-sans-serif: "Josefin Sans", sans-serif;
 }
@@ -109,9 +112,35 @@ select {
     font: inherit;
 }
 
+input {
+    border: 3px solid var(--cyan);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input:hover {
+    border-color: #60be58;
+    box-shadow: 0 0 5px rgba(211, 208, 208, 0.2);
+}
+
 /* Make sure textareas without a rows attribute are not tiny */
 textarea:not([rows]) {
     min-height: 10em;
+}
+
+textarea {
+    border: 3px solid var(--cyan);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+textarea:focus {
+    border-color: #60be58;
+    box-shadow: 0 0 5px rgba(211, 208, 208, 0.2);
 }
 
 /* Anything that has been anchored to should have extra scroll margin */
@@ -171,8 +200,10 @@ textarea:not([rows]) {
 
 .btn-hover:hover {
     filter: brightness(105%);
-    box-shadow: 0px 0px 20px 10px rgba(0,0,0,0.37);
+    box-shadow: 0px 0px 3px 3px var(--light-faded);
     cursor: pointer;
+    color: var(--light);
+    background-color: var(--cyan);
 }
 
 .cool-hover-big {
@@ -194,14 +225,33 @@ textarea:not([rows]) {
     box-shadow: 0 0 5px var(--gray-dark);
 }
 
+.grid-col-span-2 {
+    grid-column: span 2;
+}
+
+.active {
+    filter: brightness(65%);
+}
+
+.display-none {
+    display: none;
+}
+
+.display-flex-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 /*-------*/
 /*-RESET-*/
 /*-------*/
 
 .big-rounded-square {
     padding: 15px;
-    margin: 100px;
-    margin-top: 50px;
+    margin: 50px;
+    margin-top: 20px;
     border-radius: 10px;
 }
 
@@ -212,8 +262,6 @@ header {
 .container,
 .container-fluid {
     max-width: 1200px;
-    padding-right: 15px;
-    padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
     width: 100%;
@@ -231,10 +279,8 @@ header {
 
 .options-container {
     display: grid;
-    grid-template-columns: 10fr 10fr;
-    grid-template-rows: 3fr 3fr;
-    grid-template-areas: "left right";
-    gap: 1em;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .5em;
     filter: brightness(90%);
     width: 100%;
 }
@@ -242,6 +288,13 @@ header {
 .option {
     padding: 5px;
     background-color: var(--teal-faded);
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+}
+
+.option-active {
+    background-color: var(--cyan);
 }
 
 .col-left,
@@ -269,8 +322,15 @@ header {
 .btn-png,
 .btn-svg {
     background-color: var(--cyan);
-    max-width: 45%;
-    padding: 7px;
+    max-width: 48%;
+    padding: 10px;
+}
+
+.btn-generate {
+    background-color: var(--cyan);
+    max-width: 50%;
+    border: none;
+    padding: 10px;
 }
 
 @media (max-width: 992px) {
@@ -280,13 +340,61 @@ header {
 }
 
 @media (max-width: 768px) {
+
+    .col-left,
+    .col-right {
+        width: 100%;
+    }
+
     .container {
         max-width: 720px;
+    }
+
+    .main>.container {
+        flex-direction: column;
+    }
+
+    .main {
+        background-color: var(--gray-dark);
     }
 }
 
 @media (max-width: 576px) {
     .container {
         max-width: 540px;
+    }
+
+    .options-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .main {
+        background-color: var(--light);
+    }
+}
+
+@media (max-width: 380px) {
+    .options-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main {
+        background-color: var(--orange-faded);
+    }
+
+    .btn-download-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .btn-png,
+    .btn-svg {
+        max-width: 80%;
+    }
+
+    .btn-generate {
+        font-size: small;
     }
 }
