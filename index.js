@@ -1,70 +1,141 @@
-const forms = document.querySelectorAll('#form-container form');
-const formUrl = document.querySelector('#form-container .form-url');
-const formText = document.querySelector('#form-container .form-text');
-const formEmail = document.querySelector('#form-container .form-email');
+const forms = document.querySelector('#form-container');
+const formUrl = document.querySelector('#form-container .form-option-url');
+const formText = document.querySelector('#form-container .form-option-text');
+const formEmail = document.querySelector('#form-container .form-option-email');
+const formCall = document.querySelector('#form-container .form-option-call');
+const formSms = document.querySelector('#form-container .form-option-sms');
+const formVcard = document.querySelector('#form-container .form-option-vcard');
+const formWhatsapp = document.querySelector('#form-container .form-option-whatsapp');
+const formWifi = document.querySelector('#form-container .form-option-wifi');
 const qrCodeDiv = document.querySelector('#qrcode');
 const downloadSvgBtn = document.querySelector('#download-svg');
 const downloadPngBtn = document.querySelector('#download-png');
 const optionsContainer = document.querySelector('.options-container');
 
-const optionsArray = ['url', 'text', 'email', 'call', 'sms', 'vcard', 'whatsapp', 'wifi'];
-
-for (let idx = 0; idx < optionsContainer.querySelectorAll('.option').length; idx++) {
-    let array = optionsContainer.querySelectorAll('.option');
-    const element = array[idx];
-    element.addEventListener('click', (e) => {
-        const selectedOption = e.target.closest('.option');
-        if (selectedOption) {
-            const prevSelectedOption = document.querySelector('.options-container .option-active');
-            prevSelectedOption.classList.toggle('option-active');
-            selectedOption.classList.toggle('option-active');
-            const prevSelectedForm = document.querySelectorAll('#form-container form:not(.display-none)')[0];
-            const selectedForm = document.querySelector(`#form-container form.form-${selectedOption.classList[0]}`);
-            deselectForm(prevSelectedForm);
-            selectForm(selectedForm);
-        }
-        console.log('asdfg')
-    });
-}
-
-const onGenerateUrl = (e) => {
-    e.preventDefault();
-    const url = formUrl.url.value;
-    const qrCodeHTML = generateQRCodeUrl(url);
-    qrCodeDiv.innerHTML = qrCodeHTML;
-}
-
-const onGenerateText = (e) => {
-    e.preventDefault();
-    const text = formText.text.value;
-    const qrCodeHTML = generateQRCodeText(text);
-    qrCodeDiv.innerHTML = qrCodeHTML;
-}
-
-const onGenerateEmail = (e) => {
-    e.preventDefault();
-    const email = formEmail.email.value;
-    const subject = formEmail.subject.value;
-    const body = formEmail.mesaj.value;
-    const qrCodeHTML = generateQRCodeEmail(email, subject, body);
-    qrCodeDiv.innerHTML = qrCodeHTML;
-}
-
+const optionsArray = ['option-url', 'option-text', 'option-email', 'option-call', 'option-sms', 'option-vcard', 'option-whatsapp', 'option-wifi'];
 const functionsMap = {
-    url: onGenerateUrl,
-    text: onGenerateText,
-    email: onGenerateEmail
+    'option-url': generateQRCodeUrl,
+    'option-text': generateQRCodeText,
+    'option-email': generateQRCodeEmail,
+    'option-call': generateQRCodeCall,
+    'option-sms': generateQRCodeSms,
+    'option-vcard': generateQRCodeVcard,
+    'option-whatsapp': generateQRCodeWhatsapp,
+    'option-wifi': generateQRCodeWifi,
 }
 
-for (let idx = 0; idx < forms.length; idx++) {
-    const element = Array.from(forms)[idx];
-    if (!element.className.includes('display-none')) {
-        let functionName = element.className.split(' ').length > 1 ? element.className.split(' ')[0].replace('form-', '') : element.className.replace('form-', '');
-        element.addEventListener('click', functionsMap[functionName])
-    }
+optionsArray.forEach(element => {
+    const optionElement = document.getElementById(`${element}`);
+    optionElement.addEventListener('click', (e) => {
+        const selectedOption = e.target.closest('.option');
+        const prevSelectedOption = document.querySelector('.option-active');
+        const selectedForm = forms.querySelector(`.form-${selectedOption.id}`);
+        const prevSelectedForm = forms.querySelector(`form:not(.display-none)`);
+
+        selectedOption.classList.toggle('option-active');
+        prevSelectedOption.classList.toggle('option-active');
+        selectedForm.className = selectedForm.className.replace('display-none', 'display-flex-center')
+        prevSelectedForm.className = prevSelectedForm.className.replace('display-flex-center', 'display-none')
+    })
+
+    const selectedForm = document.getElementById(`form-${element}`);
+    const submitBtn = selectedForm.querySelector('button.btn-generate');
+    submitBtn.addEventListener('click', (e) => { functionsMap[element](e) });
+});
+
+function generateQRCodeVcard(e) {
+    e.preventDefault()
+    var typeNumber = 4;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const data = formVcard;
+
+    const vcard = [
+        `BEGIN:VCARD`,
+        `VERSION:3.0`,
+        `N:${data.name?.value};${data.last?.value};;;`,
+        `FN:${data.name?.value} ${data.last?.value}`,
+        `ORG:${data.vcompany.value}`,
+        `TITLE:${data.vtitle.value}`,
+        `TEL;TYPE=WORK,FAX:${data.vfax.value}`,
+        `TEL;TYPE=WORK,VOICE:${data.vphone.value}`,
+        `TEL;TYPE=CELL,VOICE:${data.vmobile.value}`,
+        `ADR;TYPE=WORK:;;${data.vaddress.value};${data.vcity.value};${data.vcountry.value};${data.vcap.value};`,
+        `EMAIL;TYPE=PREF,INTERNET:${data.vemail.value}`,
+        `URL:${data.vurl.value}`,
+        `END:VCARD`
+    ].join('%0A');
+    const base64Vcard = btoa(vcard);
+    const vcardLink = "data:text/vcard;charset=utf-8,%0A" + base64Vcard;
+
+    qr.addData(vcardLink);
+    qr.make();
+    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
-function generateQRCodeEmail(email, subject, body) {
+function generateQRCodeCall(e) {
+    e.preventDefault()
+    var typeNumber = 4;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+
+    const country = formCall.countrycodetel.value;
+    const phone = formCall.tel.value;
+
+    qr.addData(`tel:${country}${phone}`);
+    qr.make();
+
+    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
+}
+
+function generateQRCodeSms(e) {
+    e.preventDefault()
+    var typeNumber = 4;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+
+    const country = formSms.countrycodetel.value;
+    const phone = formSms.tel.value;
+    const body = formSms.body.value;
+
+    qr.addData(`sms:+${country}${phone}?body=${encodeURIComponent(body)}`);
+    qr.make();
+    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
+}
+
+
+function generateQRCodeWhatsapp(e, phone) {
+    e.preventDefault()
+
+    var typeNumber = 4;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    qr.addData(`https://wa.me/${phone}`);
+    qr.make();
+
+    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
+    return qrCodeHTML;
+}
+
+function generateQRCodeWifi(e, ssid, password) {
+    e.preventDefault()
+
+    var typeNumber = 4;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    qr.addData(`WIFI:S:${ssid};T:WPA;P:${password};;`);
+    qr.make();
+
+    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
+    return qrCodeHTML;
+}
+
+function generateQRCodeEmail(e, email, subject, body) {
+    e.preventDefault()
+
     var typeNumber = 4;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
@@ -76,6 +147,8 @@ function generateQRCodeEmail(email, subject, body) {
 }
 
 function generateQRCodeText(text) {
+    e.preventDefault()
+
     var typeNumber = 4;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
@@ -87,6 +160,8 @@ function generateQRCodeText(text) {
 }
 
 function generateQRCodeUrl(url) {
+    e.preventDefault()
+
     var typeNumber = 4;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
@@ -95,18 +170,6 @@ function generateQRCodeUrl(url) {
 
     var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
     return qrCodeHTML;
-}
-
-function deselectForm(form) {
-    if (form.className.includes('display-flex-center')) {
-        form.classList.remove('display-flex-center');
-    }
-    form.classList.add('display-none');
-}
-
-function selectForm(form) {
-    form.classList.remove('display-none');
-    form.classList.add('display-flex-center');
 }
 
 function downloadSVG() {
