@@ -45,32 +45,28 @@ optionsArray.forEach(element => {
 
 function generateQRCodeVcard(e) {
     e.preventDefault()
-    var typeNumber = 4;
+    var typeNumber = 15;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
-    const data = formVcard;
 
-    const vcard = [
-        `BEGIN:VCARD`,
-        `VERSION:3.0`,
-        `N:${data.name?.value};${data.last?.value};;;`,
-        `FN:${data.name?.value} ${data.last?.value}`,
-        `ORG:${data.vcompany.value}`,
-        `TITLE:${data.vtitle.value}`,
-        `TEL;TYPE=WORK,FAX:${data.vfax.value}`,
-        `TEL;TYPE=WORK,VOICE:${data.vphone.value}`,
-        `TEL;TYPE=CELL,VOICE:${data.vmobile.value}`,
-        `ADR;TYPE=WORK:;;${data.vaddress.value};${data.vcity.value};${data.vcountry.value};${data.vcap.value};`,
-        `EMAIL;TYPE=PREF,INTERNET:${data.vemail.value}`,
-        `URL:${data.vurl.value}`,
-        `END:VCARD`
-    ].join('%0A');
-    const base64Vcard = btoa(vcard);
-    const vcardLink = "data:text/vcard;charset=utf-8,%0A" + base64Vcard;
+    let name = formVcard.vname.value;
+    let lastName = formVcard.vlast.value;
+    let phone = formVcard.vmobile.value;
+    let codTara = formVcard.codtara.value;
+    let company = formVcard.vcompany.value;
+    let title = formVcard.vtitle.value;
+    let address = formVcard.vaddress.value;
+    let city = formVcard.vcity.value;
+    let country = formVcard.vcountry.value;
+    let cap = formVcard.vcap.value;
+    let email = formVcard.vemail.value;
+    let url = formVcard.vurl.value;
 
-    qr.addData(vcardLink);
+    const vcard = `BEGIN:VCARD\nVERSION:2.1\nN;CHARSET=UTF-8:${lastName};${name}\nFN;CHARSET=UTF-8:${name} ${lastName}\nTEL;CELL:${codTara}${phone}\nORG;CHARSET=UTF-8:${company}\nTITLE;CHARSET=UTF-8:${title}\nADR;CHARSET=UTF-8;WORK;PREF:;;${address};${city};${country};${cap}\nEMAIL:${email}\nURL:${url}\nEND:VCARD`;
+
+    qr.addData(vcard);
     qr.make();
-    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
+    var qrCodeHTML = qr.createSvgTag(2, 5, 'none');
     qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
