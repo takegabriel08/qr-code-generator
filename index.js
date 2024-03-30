@@ -43,6 +43,41 @@ optionsArray.forEach(element => {
     submitBtn.addEventListener('click', (e) => { functionsMap[element](e) });
 });
 
+function generateQRCodeSms(e) {
+    e.preventDefault()
+    var typeNumber = 4;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+
+    const country = formSms.countrycodetel.value;
+    const phone = formSms.tel.value;
+    const body = formSms.body.value;
+
+    qr.addData(`sms:+${country}${phone}?body=${encodeURIComponent(body)}`);
+    qr.make();
+    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
+}
+
+
+function generateQRCodeWhatsapp(e) {
+    e.preventDefault()
+
+    var typeNumber = 10;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+
+    const country = formWhatsapp.countrycodetel.value;
+    const phone = formWhatsapp.tel.value;
+    const message = formWhatsapp.message.value;
+
+    qr.addData(`https://wa.me/${country}${phone}?text=${encodeURIComponent(message)}`);
+    qr.make();
+
+    var qrCodeHTML = qr.createSvgTag(5, 2, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
+}
+
 function generateQRCodeVcard(e) {
     e.preventDefault()
     var typeNumber = 15;
@@ -84,36 +119,6 @@ function generateQRCodeCall(e) {
 
     var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
     qrCodeDiv.innerHTML = qrCodeHTML;
-}
-
-function generateQRCodeSms(e) {
-    e.preventDefault()
-    var typeNumber = 4;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
-
-    const country = formSms.countrycodetel.value;
-    const phone = formSms.tel.value;
-    const body = formSms.body.value;
-
-    qr.addData(`sms:+${country}${phone}?body=${encodeURIComponent(body)}`);
-    qr.make();
-    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
-    qrCodeDiv.innerHTML = qrCodeHTML;
-}
-
-
-function generateQRCodeWhatsapp(e, phone) {
-    e.preventDefault()
-
-    var typeNumber = 4;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData(`https://wa.me/${phone}`);
-    qr.make();
-
-    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
-    return qrCodeHTML;
 }
 
 function generateQRCodeWifi(e, ssid, password) {
