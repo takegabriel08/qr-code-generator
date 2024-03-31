@@ -54,7 +54,7 @@
                         <h4 style="margin-bottom: 10px;">Introdu URL-ul</h4>
                         <input type="url" name="url" id="url" value="https://">
                         <p id="errorlink" style="color: rgb(237, 80, 79);display: none;">Acest câmp este obligatoriu</p>
-                            Acest câmp este obligatoriu
+                        Acest câmp este obligatoriu
                         </p>
                         <p class="form-text text-muted" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">Codul tău
                             qr va deschide acest
@@ -590,14 +590,14 @@
                             <div class="row">
                                 <div class="cell">
                                     <label>Prenume</label>
-                                    <input type="text" name="vname" required="required" class="form-control">
+                                    <input type="text" name="vname" required="required">
                                     <p id="errorvname"
                                         style="color: rgb(237, 80, 79); display: none; margin-bottom: 0.75rem;">
                                         Acest câmp este obligatoriu</p>
                                 </div>
                                 <div class="cell">
                                     <label>Nume</label>
-                                    <input type="text" name="vlast" class="form-control">
+                                    <input type="text" name="vlast">
                                     <p id="errorvlast"
                                         style="color: rgb(237, 80, 79); display: none; margin-bottom: 0.75rem;">
                                         Acest câmp este obligatoriu</p>
@@ -871,8 +871,10 @@
                                 <p id="errorvphone"
                                     style="color: rgb(237, 80, 79); display: none; margin-bottom: 0.75rem;">
                                     Acest câmp este obligatoriu</p>
-                                <label style="padding-top: 5px;">Mobil</label>
-                                <input type="text" name="vmobile" class="form-control">
+                                <div class="cell">
+                                    <label style="padding-top: 5px;">Mobil</label>
+                                    <input type="text" name="vmobile" class="form-control">
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="cell">

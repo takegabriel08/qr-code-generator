@@ -391,8 +391,12 @@ header {
 }
 
 @media (max-width: 576px) {
-    .container {
+    .container,
+    .container-fluid {
         max-width: 540px;
+    }
+    .row{
+        flex-direction: column;
     }
 
     .options-container {
