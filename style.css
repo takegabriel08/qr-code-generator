@@ -391,11 +391,13 @@ header {
 }
 
 @media (max-width: 576px) {
+
     .container,
     .container-fluid {
         max-width: 540px;
     }
-    .row{
+
+    .row {
         flex-direction: column;
     }
 
