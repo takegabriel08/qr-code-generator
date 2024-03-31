@@ -41,6 +41,12 @@ optionsArray.forEach(element => {
     const selectedForm = document.getElementById(`form-${element}`);
     const submitBtn = selectedForm.querySelector('button.btn-generate');
     submitBtn.addEventListener('click', (e) => { functionsMap[element](e) });
+    submitBtn.addEventListener('click', (e) => { resetInputs(e, element) });
+    // window.addEventListener("keydown", function (e) {
+    //     if (e.key === "Enter") {
+    //         (e) => { functionsMap[element](e) };
+    //     }
+    // });
 });
 
 function generateQRCodeSms(e) {
@@ -63,7 +69,7 @@ function generateQRCodeSms(e) {
 function generateQRCodeWhatsapp(e) {
     e.preventDefault()
 
-    var typeNumber = 10;
+    var typeNumber = 0;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
 
@@ -74,13 +80,13 @@ function generateQRCodeWhatsapp(e) {
     qr.addData(`https://wa.me/${country}${phone}?text=${encodeURIComponent(message)}`);
     qr.make();
 
-    var qrCodeHTML = qr.createSvgTag(5, 2, 'none');
+    var qrCodeHTML = qr.createSvgTag(2, 5, 'none');
     qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
 function generateQRCodeVcard(e) {
     e.preventDefault()
-    var typeNumber = 15;
+    var typeNumber = 0;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
 
@@ -101,7 +107,7 @@ function generateQRCodeVcard(e) {
 
     qr.addData(vcard);
     qr.make();
-    var qrCodeHTML = qr.createSvgTag(2, 5, 'none');
+    var qrCodeHTML = qr.createSvgTag(3, 5, 'none');
     qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
@@ -121,56 +127,79 @@ function generateQRCodeCall(e) {
     qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
-function generateQRCodeWifi(e, ssid, password) {
+function generateQRCodeWifi(e) {
     e.preventDefault()
 
     var typeNumber = 4;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData(`WIFI:S:${ssid};T:WPA;P:${password};;`);
+
+    const ssid = formWifi.ssid.value;
+    const type = formWifi.networktype.value;
+    const password = formWifi.wifipass.value;
+    const hidden = formWifi.hidden.checked;
+
+    qr.addData(`WIFI:S:${ssid};T:${type};P:${password};H:${hidden};;`);
     qr.make();
 
     var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
-    return qrCodeHTML;
+    qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
-function generateQRCodeEmail(e, email, subject, body) {
+function generateQRCodeEmail(e) {
     e.preventDefault()
 
-    var typeNumber = 4;
+    var typeNumber = 0;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData(`mailto:${email}?subject=${subject}&body=${body}`);
+
+    const address = formEmail.email.value;
+    const subject = formEmail.subject.value;
+    const body = formEmail.message.value;
+
+    qr.addData(`mailto:${address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
     qr.make();
 
-    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
-    return qrCodeHTML;
+    var qrCodeHTML = qr.createSvgTag(3, 5, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
-function generateQRCodeText(text) {
+function generateQRCodeText(e) {
     e.preventDefault()
 
-    var typeNumber = 4;
+    var typeNumber = 0;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
+
+    const text = formText.text.value;
+
     qr.addData(text);
     qr.make();
 
-    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
-    return qrCodeHTML;
+    var qrCodeHTML = qr.createSvgTag(4, 5, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
 }
 
-function generateQRCodeUrl(url) {
+function generateQRCodeUrl(e) {
     e.preventDefault()
 
-    var typeNumber = 4;
+    var typeNumber = 0;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
+
+    const url = formUrl.url.value;
+
     qr.addData(url);
     qr.make();
 
-    var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
-    return qrCodeHTML;
+    var qrCodeHTML = qr.createSvgTag(4, 5, 'none');
+    qrCodeDiv.innerHTML = qrCodeHTML;
+}
+
+function resetInputs(e, element) {
+    e.preventDefault();
+    const form = document.getElementById(`form-${element}`);
+    form.reset();
 }
 
 function downloadSVG() {

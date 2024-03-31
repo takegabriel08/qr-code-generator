@@ -52,8 +52,8 @@
                 <div id="form-container" class="container-fluid">
                     <form id="form-option-url" class="form-option-url display-flex-center">
                         <h4 style="margin-bottom: 10px;">Introdu URL-ul</h4>
-                        <input type="url" name="url" id="url" placeholder="https://">
-                        <p id="errorlink" style="color: rgb(237, 80, 79); visibility: hidden; position: absolute;">
+                        <input type="url" name="url" id="url" value="https://">
+                        <p id="errorlink" style="color: rgb(237, 80, 79);display: none;">Acest câmp este obligatoriu</p>
                             Acest câmp este obligatoriu
                         </p>
                         <p class="form-text text-muted" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">Codul tău
@@ -81,7 +81,8 @@
                                 style="margin-bottom: 5px;">
                             <p id="errorsubject" class="display-none" style="color: rgb(237, 80, 79);">Acest câmp este
                                 obligatoriu</p>
-                            <textarea id="mesaj" placeholder="Scrie mesajul aici..." wrap="soft"></textarea>
+                            <textarea id="mesaj" name="message" placeholder="Scrie mesajul aici..."
+                                wrap="soft"></textarea>
                             <p id="errorbody" class="display-none" style="color: rgb(237, 80, 79);">Acest câmp este
                                 obligatoriu</p>
                             <small class="form-text text-muted"
@@ -271,7 +272,7 @@
                                 value="1787" label="Puerto Rico (+1 787)">Puerto Rico (+1 787)</option>\n<option
                                 value="1939" label="Puerto Rico (+1 939)">Puerto Rico (+1 939)</option>\n
                             <option value="974" label="Qatar (+974)">Qatar (+974)</option>\n<option value="262"
-                                label="Reunion (+262)">Reunion (+262)</option>\n<option value="40"
+                                label="Reunion (+262)">Reunion (+262)</option>\n<option value="+40"
                                 label="Romania (+40)">Romania (+40)</option>\n<option value="7" label="Russia (+7)">
                                 Russia (+7)</option>\n<option value="250" label="Rwanda (+250)">Rwanda (+250)
                             </option>\n<option value="685" label="Samoa (+685)">Samoa (+685)</option>\n<option
@@ -519,7 +520,7 @@
                                 value="1787" label="Puerto Rico (+1 787)">Puerto Rico (+1 787)</option>\n<option
                                 value="1939" label="Puerto Rico (+1 939)">Puerto Rico (+1 939)</option>\n
                             <option value="974" label="Qatar (+974)">Qatar (+974)</option>\n<option value="262"
-                                label="Reunion (+262)">Reunion (+262)</option>\n<option value="40"
+                                label="Reunion (+262)">Reunion (+262)</option>\n<option value="+40"
                                 label="Romania (+40)">Romania (+40)</option>\n<option value="7" label="Russia (+7)">
                                 Russia (+7)</option>\n<option value="250" label="Rwanda (+250)">Rwanda (+250)
                             </option>\n<option value="685" label="Samoa (+685)">Samoa (+685)</option>\n<option
@@ -882,7 +883,8 @@
                                         Acest câmp este obligatoriu</p>
                                 </div>
                                 <div class="cell">
-                                    <label>Website (URL)</label> <input type="text" name="vurl" placeholder="https://"
+                                    <label>Website (URL)</label>
+                                    <input type="text" name="vurl" placeholder="https://" value="https://"
                                         class="form-control">
                                 </div>
                             </div>
@@ -1135,7 +1137,7 @@
                                         label="Puerto Rico (+1 787)">Puerto Rico (+1 787)</option>\n<option value="1939"
                                         label="Puerto Rico (+1 939)">Puerto Rico (+1 939)</option>\n
                                     <option value="974" label="Qatar (+974)">Qatar (+974)</option>\n<option value="262"
-                                        label="Reunion (+262)">Reunion (+262)</option>\n<option value="40"
+                                        label="Reunion (+262)">Reunion (+262)</option>\n<option value="+40"
                                         label="Romania (+40)">Romania (+40)</option>\n<option value="7"
                                         label="Russia (+7)">
                                         Russia (+7)</option>\n<option value="250" label="Rwanda (+250)">Rwanda
@@ -1199,9 +1201,8 @@
                                     field is required.</p>
                             </div>
                             <div class="cell">
-                                <label>Numar Telefon</label> 
-                                <input name="tel" placeholder="Phone number"
-                                    required="required">
+                                <label>Numar Telefon</label>
+                                <input name="tel" placeholder="Phone number" required="required">
                                 <p id="errorwapp_number" class="small mb-0 mt-2"
                                     style="color: rgb(237, 80, 79); visibility: hidden; position: absolute;">This
                                     field is required.</p>
@@ -1240,15 +1241,16 @@
                                     obligatoriu</p>
                             </div>
                             <div class="cell">
-                                <label>Parolă</label> <input type="text" name="wifipass" placeholder="Parolă WI-FI"
-                                    class="form-control">
+                                <label>Parolă</label>
+                                <input type="text" name="wifipass" placeholder="Parolă WI-FI" class="form-control">
                                 <p id="errorwifipass" style="color: rgb(237, 80, 79); display: none;">Acest câmp este
                                     obligatoriu</p>
                             </div>
                         </div>
                         <div class="cell">
-                            <label class="form-check-label"><input type="checkbox" class="form-check-input"> <span
-                                    class="form-check-sign"></span>
+                            <label class="form-check-label">
+                                <input type="checkbox" name="hidden" class="form-check-input">
+                                <span class="form-check-sign"></span>
                                 Ascunsă
                             </label>
                         </div>
@@ -1260,7 +1262,7 @@
                 </div>
             </div>
             <div class="col-right font-xl text-center radius-m">
-                <div id="qrcode">
+                <div id="qrcode" style="position: sticky; top: 150px;">
                     <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="290px" height="290px"
                         viewBox="-260 40 520 520" style="enable-background:new -260 40 520 520;width: 100%;"
