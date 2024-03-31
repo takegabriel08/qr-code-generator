@@ -59,7 +59,7 @@ function generateQRCodeSms(e) {
     const phone = formSms.tel.value;
     const body = formSms.body.value;
 
-    qr.addData(`sms:+${country}${phone}?body=${encodeURIComponent(body)}`);
+    qr.addData(`sms:${country}${phone}?body=${encodeURIComponent(body)}`);
     qr.make();
     var qrCodeHTML = qr.createSvgTag(5, 5, 'none');
     qrCodeDiv.innerHTML = qrCodeHTML;
