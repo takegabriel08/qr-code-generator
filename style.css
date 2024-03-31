@@ -113,7 +113,8 @@ select {
 }
 
 input,
-textarea {
+textarea,
+select {
     border: 3px solid var(--cyan);
     padding: 10px;
     border-radius: 10px;
@@ -122,8 +123,13 @@ textarea {
 }
 
 input:hover,
-textarea:hover {
+textarea:hover,
+select:hover {
     border-color: #60be58;
+}
+
+select {
+    max-width: 250px;
 }
 
 input:focus,
@@ -187,6 +193,18 @@ textarea:not([rows]) {
     border-radius: 12px;
 }
 
+.gap-s {
+    gap: 0.5rem;
+}
+
+.gap-m {
+    gap: 0.75rem;
+}
+
+.gap-l {
+    gap: 1rem;
+}
+
 .btn-hover {
     transition: all 0.2s ease-in-out;
 }
@@ -222,12 +240,12 @@ textarea:not([rows]) {
     grid-column: span 2;
 }
 
-.active {
-    filter: brightness(65%);
+.grid-row-span-2 {
+    grid-row: span 2;
 }
 
-.display-none {
-    display: none;
+.active {
+    filter: brightness(65%);
 }
 
 .display-flex-center {
@@ -235,6 +253,10 @@ textarea:not([rows]) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.display-none {
+    display: none;
 }
 
 /*-------*/
@@ -258,6 +280,22 @@ header {
     margin-right: auto;
     margin-left: auto;
     width: 100%;
+}
+
+.container-fluid {
+    max-width: 100%;
+}
+
+.cell {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 .main {
